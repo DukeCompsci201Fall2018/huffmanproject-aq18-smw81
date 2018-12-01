@@ -1,5 +1,6 @@
 
 /**
+ * Alex Qiao (aq18)
  * Although this class has a history of several years,
  * it is starting from a blank-slate, new and clean implementation
  * as of Fall 2018.
