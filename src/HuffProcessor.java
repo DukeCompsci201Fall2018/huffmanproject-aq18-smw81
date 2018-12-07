@@ -124,6 +124,7 @@ public class HuffProcessor {
 		while (true) {
 			int character = in.readBits(BITS_PER_WORD);
 			if (character == -1) break;
+			if (character == PSEUDO_EOF) break;
 			freq[character] += 1;
 		}
 		return freq;
