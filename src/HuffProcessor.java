@@ -89,19 +89,19 @@ public class HuffProcessor {
 
 	private String[] makeCodingsFromTree(HuffNode root) {
 		String[] encodings = new String[ALPH_SIZE + 1];
-		encodings = codingHelper(root,"",encodings);
+		codingHelper(root,"",encodings);
 		return encodings;
 	}
 
-	private String[] codingHelper(HuffNode root, String string, String[] encodings) {
-		if (root == null) return encodings;
+	private void codingHelper(HuffNode root, String string, String[] encodings) {
+		if (root == null) return;
 		if (root.myLeft == null && root.myRight == null) {
 			encodings[root.myValue] = string;
-			return encodings;
+			return;
 		}
 		
-    	encodings = codingHelper(root.myLeft,string+"0",encodings);
-    	return codingHelper(root.myRight,string+"1",encodings);
+    	codingHelper(root.myLeft,string+"0",encodings);
+    	codingHelper(root.myRight,string+"1",encodings);
 	}
 
 	private HuffNode makeTreeFromCounts(int[] counts) {
