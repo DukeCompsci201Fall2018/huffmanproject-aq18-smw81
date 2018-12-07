@@ -60,16 +60,17 @@ public class HuffProcessor {
 
 	private void writeCopmressedBits(String[] codings, BitInputStream in, BitOutputStream out) {
 		while (true) {
-			if (in.readBits(BITS_PER_WORD) == -1) {
-				//String code = codings[PSEUDO_EOF];
-				//out.writeBits(code.length(), Integer.parseInt(code,2));
+			int character = in.readBits(BITS_PER_WORD);
+			if (character == -1) {
+				String code = codings[PSEUDO_EOF];
+				out.writeBits(code.length(), Integer.parseInt(code,2));
 				break;
 			}
-			String code = codings[in.readBits(BITS_PER_WORD)];
+			String code = codings[character];
 			out.writeBits(code.length(), Integer.parseInt(code,2));
 		}
-		String code = codings[PSEUDO_EOF];
-		out.writeBits(code.length(), Integer.parseInt(code,2));
+		//String code = codings[PSEUDO_EOF];
+		//out.writeBits(code.length(), Integer.parseInt(code,2));
 
 	}
 
@@ -100,8 +101,8 @@ public class HuffProcessor {
 			return;
 		}
 		
-    	codingHelper(root.myLeft,string+0,encodings);
-    	codingHelper(root.myRight,string+1,encodings);
+    	codingHelper(root.myLeft,string+"0",encodings);
+    	codingHelper(root.myRight,string+"1",encodings);
 	}
 
 	private HuffNode makeTreeFromCounts(int[] counts) {
