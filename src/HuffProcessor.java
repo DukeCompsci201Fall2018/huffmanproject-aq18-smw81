@@ -58,7 +58,8 @@ public class HuffProcessor {
 	}
 
 	private void writeCopmressedBits(String[] codings, BitInputStream in, BitOutputStream out) {
-		while (in.readBits(BITS_PER_WORD)!=ALPH_SIZE-1) {
+		while (true) {
+			if (in.readBits(BITS_PER_WORD) == -1) break;
 			String code = codings[in.readBits(BITS_PER_WORD)];
 			out.writeBits(code.length(), Integer.parseInt(code,2));
 		}
@@ -88,6 +89,7 @@ public class HuffProcessor {
 	}
 
 	private void codingHelper(HuffNode root, String string, String[] encodings) {
+		if (root == null) return;
 		if (root.myLeft == null && root.myRight == null) {
 			encodings[root.myValue] = string;
 		}
@@ -118,8 +120,9 @@ public class HuffProcessor {
 	private int[] readForCounts(BitInputStream in) {
 		int[] freq = new int[ALPH_SIZE + 1];
 		freq[PSEUDO_EOF] = 1;
-		while (in.readBits(BITS_PER_WORD)>ALPH_SIZE-1) {
+		while (true) {
 			int character = in.readBits(BITS_PER_WORD);
+			if (character == -1) break;
 			freq[character] += 1;
 		}
 		return freq;
